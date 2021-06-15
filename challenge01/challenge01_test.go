@@ -22,7 +22,7 @@ func Test_Challenge01_00_Basic_Functionality(t *testing.T) {
 func Test_Challenge01_01_Do_not_Fetch_URLs_Twice(t *testing.T) {
 	f := fetcher.Distinct()
 
-	c := New()
+	c := New01()
 	c.Crawl("https://golang.org/", 4, f)
 
 	assert.True(t, f.Completed(), "Not all URLs fetched")
@@ -36,7 +36,7 @@ func Test_Challenge01_02_Be_More_Efficient(t *testing.T) {
 
 	done := make(chan bool)
 	go func() {
-		c := New()
+		c := New02()
 		c.Crawl("https://golang.org/", 4, f)
 		close(done)
 	}()
@@ -56,7 +56,7 @@ func Test_Challenge01_02_Be_More_Efficient(t *testing.T) {
 func Test_Challenge01_03_RateLimit_Requests(t *testing.T) {
 	f := fetcher.RateLimited()
 
-	c := NewWithRateLimit(2 * time.Second)
+	c := NewWithRateLimit03(2 * time.Second)
 	c.Crawl("https://golang.org/", 4, f)
 
 	assert.True(t, f.Completed(), "Not all URLs fetched")
