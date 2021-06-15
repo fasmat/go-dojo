@@ -1,6 +1,6 @@
 # ZCamp 2021 Coding Dojo - Concurrency in Go
 
-*TODO*: Build status
+[![GitHub Actions CI](https://github.com/fasmat/go-dojo/actions/workflows/main.yml/badge.svg)](https://github.com/fasmat/go-dojo/actions/workflows/main.yml)
 
 ## Introduction
 

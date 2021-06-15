@@ -1,0 +1,26 @@
+name: GitHub Actions CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        go: [ '1.16', '1.15' ]
+        os: [macos-10.15, ubuntu-20.04]
+    name: Go ${{ matrix.go }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Setup go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Build code
+        run: go build -v ./...
