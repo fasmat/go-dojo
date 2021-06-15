@@ -3,7 +3,7 @@ package challenge02
 type Context interface {
 }
 
-type emptyCtx struct{}
+type emptyCtx int
 
 type backgroundCtx struct{ emptyCtx }
 
