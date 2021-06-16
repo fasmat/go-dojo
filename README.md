@@ -15,13 +15,20 @@ This coding dojo was created to have some fun during the #ZCamp2021 and learn Go
 3. Install the extension [Remote Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 When you clone the repository and open the directory inside VSCode it should prompt you to re-open it in a docker container. If it doesn't
-click the green Icon in the bottom left of the VSCode window and select "Reopen in Container".
+click the green Icon in the bottom left of the VSCode window and select "Reopen in Container". The container that is started by VSCode already is configured
+for the challenge. You can test if it works by:
 
-The first start takes ~1 minute with fast internet connection, after that you are ready to go!
+```bash
+go build -v ./...
+```
+
+Which should pass without any errors.
+
+The first start of the Container takes ~1 minute with fast internet connection, after that you are ready to go!
 
 ## Challenges
 
-### Challenge 01: WebCrawler
+### [Challenge 01: WebCrawler](challenge01)
 
 **Note:** This example was taken and extended from <https://tour.golang.org/concurrency/10>
 
