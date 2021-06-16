@@ -8,17 +8,12 @@ import (
 )
 
 type Crawler02 struct {
-	fetched map[string]bool
-	wg      *sync.WaitGroup
-	mu      sync.Mutex
+	fetched sync.Map
+	wg      sync.WaitGroup
 }
 
 func New02() *Crawler02 {
-	c := &Crawler02{
-		fetched: make(map[string]bool),
-		wg:      new(sync.WaitGroup),
-	}
-	c.wg.Add(1)
+	c := &Crawler02{}
 	return c
 }
 
@@ -30,18 +25,18 @@ func NewWithRateLimit02(...interface{}) Crawler {
 // Crawl uses fetcher to recursively crawl
 // pages starting with url, to a maximum of depth.
 func (c *Crawler02) Crawl(url string, depth int, fetcher fetcher.Fetcher) {
-	go c.crawHandler(url, depth, fetcher)
-
+	c.wg.Add(1)
+	go c.crawlHandler(url, depth, fetcher)
 	c.wg.Wait()
 }
 
-func (c *Crawler02) crawHandler(url string, depth int, fetcher fetcher.Fetcher) {
+func (c *Crawler02) crawlHandler(url string, depth int, fetcher fetcher.Fetcher) {
 	defer c.wg.Done()
 	if depth <= 0 {
 		return
 	}
 
-	if c.checkFetched(url) {
+	if c.fetchedBefore(url) {
 		fmt.Printf("skipping: %s\n", url)
 		return
 	}
@@ -55,17 +50,14 @@ func (c *Crawler02) crawHandler(url string, depth int, fetcher fetcher.Fetcher) 
 
 	c.wg.Add(len(urls))
 	for _, u := range urls {
-		go c.Crawl(u, depth-1, fetcher)
+		go c.crawlHandler(u, depth-1, fetcher)
 	}
 }
 
-func (c *Crawler02) checkFetched(url string) bool {
-	c.mu.Lock()
-	defer c.mu.Unlock()
-
-	if c.fetched[url] {
+func (c *Crawler02) fetchedBefore(url string) bool {
+	if _, ok := c.fetched.Load(url); ok {
 		return true
 	}
-	c.fetched[url] = true
+	c.fetched.Store(url, true)
 	return false
 }
