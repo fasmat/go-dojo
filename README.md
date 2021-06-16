@@ -50,6 +50,25 @@ tasks.
 |2|Fetch URLs concurrently to speed up the crawler|
 |3|Add the option to limit the rate at which the crawler fetches the server|
 
+### [Challenge 02: The context package](challenge02)
+
+**Disclaimer:** The idea for this challenge came from [Just for Func](https://www.youtube.com/channel/UC_BzFbxG2za3bp5NRRRXJSw) and more specifically
+this [video](https://www.youtube.com/watch?v=8M90t0KvEDY).
+
+The goal of this challenge is to re-implement the official [context](https://golang.org/pkg/context/) package. It is widely used in applications to carry
+deadlines, cancellation signals, and other request-scoped values across API boundaries and between processes. For further information see the official
+documentation.
+
+In this challenge the foundation for the package is already layed. There is a single test already available, but it is unfortunately failing. Fix this test
+and then proceed to implement the whole package in a TDD fashion test after test.
+
+The whole context package without tests is < 350 lines of code and can be used as a reference if you get stuck. Remember to run all tests with the race
+detector enabled to ensure the context package is concurrency safe.
+
+```bash
+go test -v -race ./challenge02
+```
+
 ## Contributing
 
 Feel free to submit a PR. I'm happy to extend and improve these challenges.
