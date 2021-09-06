@@ -1,26 +1,36 @@
-name: GitHub Actions CI
+name: GitHub Actions Main CI
 
 on:
   push:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        go: [ '1.16', '1.15' ]
-        os: [macos-10.15, ubuntu-20.04]
-    name: Go ${{ matrix.go }} on ${{ matrix.os }}
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-        
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
       - name: Setup go
-        uses: actions/setup-go@v1
+        uses: actions/setup-go@v2
         with:
-          go-version: ${{ matrix.go }}
+          go-version: "1.17.x"
+
+      - name: Cache go dependencies
+        uses: actions/cache@v2
+        id: go-cache
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - name: Build code
         run: go build -v ./...

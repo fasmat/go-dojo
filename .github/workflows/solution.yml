@@ -1,0 +1,62 @@
+name: GitHub Actions solutions CI
+
+on:
+  push:
+    branches:
+      - challenge01-solutions
+  pull_request:
+    branches:
+      - challenge01-solutions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17.x"
+
+      - name: Cache go dependencies
+        uses: actions/cache@v2
+        id: go-cache
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Build code
+        run: go build -v ./...
+
+  test:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.17.x"
+
+      - name: Cache go dependencies
+        uses: actions/cache@v2
+        id: go-cache
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Test code
+        run: go test -v ./...
