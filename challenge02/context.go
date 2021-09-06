@@ -3,7 +3,7 @@ package challenge02
 type Context interface {
 }
 
-type emptyCtx struct{}
+type emptyCtx int
 
 func (e *emptyCtx) String() string {
 	switch e {
@@ -21,9 +21,9 @@ var (
 )
 
 func TODO() Context {
-	return nil
+	return todo
 }
 
 func Background() Context {
-	return nil
+	return background
 }
