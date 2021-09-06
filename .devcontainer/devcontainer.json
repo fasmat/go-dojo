@@ -6,10 +6,9 @@
 		"dockerfile": "Dockerfile",
 		"args": {
 			// Update the VARIANT arg to pick a version of Go: 1, 1.16, 1.15
-			"VARIANT": "1.16",
+			"VARIANT": "1.17",
 			// Options
-			"INSTALL_NODE": "false",
-			"NODE_VERSION": "lts/*"
+			"NODE_VERSION": "none"
 		}
 	},
 	"runArgs": [
@@ -17,8 +16,13 @@
 		"--security-opt",
 		"seccomp=unconfined"
 	],
+	"mounts": [
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,destination=/home/vscode/.ssh,type=bind,readonly",
+		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,destination=/root/.ssh,type=bind,readonly"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
+		"editor.formatOnSave": true,
 		"go.toolsManagement.checkForUpdates": "local",
 		"go.useLanguageServer": true,
 		"go.gopath": "/go",
@@ -26,10 +30,11 @@
 	},
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
+		"streetsidesoftware.code-spell-checker",
+		"eamodio.gitlens",
 		"golang.Go",
 		"davidanson.vscode-markdownlint",
-		"ms-vsliveshare.vsliveshare",
-		"streetsidesoftware.code-spell-checker",
+		"vscode-icons-team.vscode-icons"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
