@@ -6,15 +6,15 @@ import (
 	"dojo/challenge01/fetcher"
 )
 
-type Crawler int
+type Crawler struct{}
 
-func New() Crawler {
-	return 0
+func New() *Crawler {
+	return &Crawler{}
 }
 
-func NewWithRateLimit(...interface{}) Crawler {
+func NewWithRateLimit(...any) *Crawler {
 	// Needed for TODO3
-	return 0
+	return &Crawler{}
 }
 
 // Crawl uses fetcher to recursively crawl
@@ -29,7 +29,7 @@ func (c Crawler) Crawl(url string, depth int, fetcher fetcher.Fetcher) {
 	}
 	body, urls, err := fetcher.Fetch(url)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println("Error:", err)
 		return
 	}
 	fmt.Printf("found: %s %q\n", url, body)

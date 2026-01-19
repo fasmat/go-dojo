@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+// RateLimitedFetcher is Fetcher that panics if requests are made too quickly or the same URL is fetched twice.
 type RateLimitedFetcher struct {
 	data    map[string]*Result
 	fetched sync.Map

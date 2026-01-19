@@ -6,6 +6,8 @@ import (
 	"time"
 )
 
+// SlowFetcher is Fetcher that simulates slow network by adding 1 second delay to each fetch.
+// It panics if the same URL is fetched twice.
 type SlowFetcher struct {
 	data    map[string]*Result
 	fetched sync.Map

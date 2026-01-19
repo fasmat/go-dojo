@@ -1,21 +1,15 @@
 package challenge02
 
 import (
-	"fmt"
 	"testing"
 )
 
 // This test is failing and needs to be fixed first.
 // After that continue test by test until you completed implementing the package :-)
 func TestBackgroundNotTODO(t *testing.T) {
-	todo := fmt.Sprint(TODO())
-	bg := fmt.Sprint(Background())
-
-	if todo == bg {
-		t.Errorf("TODO and Background are equal: %q vs %q", todo, bg)
+	if TODO() == Background() {
+		t.Errorf("TODO and Background are identical")
 	}
-
-	t.Logf("%s %s", todo, bg)
 }
 
 // func TestWithCancel(t *testing.T) {

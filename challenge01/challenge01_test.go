@@ -6,7 +6,7 @@ import (
 
 	"dojo/challenge01/fetcher"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Safety check. If this test fails you broke something in the Crawler.
@@ -25,7 +25,7 @@ func Test_Challenge01_01_Do_not_Fetch_URLs_Twice(t *testing.T) {
 	c := New()
 	c.Crawl("https://golang.org/", 4, f)
 
-	assert.True(t, f.Completed(), "Not all URLs fetched")
+	require.True(t, f.Completed(), "Not all URLs fetched")
 }
 
 // The fetcher used in this test also panics when an URL is fetched twice and additionally
@@ -44,10 +44,10 @@ func Test_Challenge01_02_Be_More_Efficient(t *testing.T) {
 	select {
 	case <-done:
 	case <-time.After(5 * time.Second):
-		assert.Fail(t, "too slow!")
+		require.Fail(t, "too slow!")
 	}
 
-	assert.True(t, f.Completed(), "Not all URLs fetched")
+	require.True(t, f.Completed(), "Not all URLs fetched")
 }
 
 // The fetcher in this test simulates a server with a tight rate limit from a client, if you fetch more often
@@ -59,5 +59,5 @@ func Test_Challenge01_03_RateLimit_Requests(t *testing.T) {
 	c := NewWithRateLimit(2 * time.Second)
 	c.Crawl("https://golang.org/", 4, f)
 
-	assert.True(t, f.Completed(), "Not all URLs fetched")
+	require.True(t, f.Completed(), "Not all URLs fetched")
 }

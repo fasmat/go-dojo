@@ -6,12 +6,14 @@ type Result struct {
 	urls []string
 }
 
+// Fetcher interface defines a method to fetch URLs.
 type Fetcher interface {
 	// Fetch returns the body of URL and
 	// a slice of URLs found on that page.
 	Fetch(url string) (body string, urls []string, err error)
 }
 
+// Sample data to be used by fetchers
 var data = map[string]*Result{
 	"https://golang.org/": {
 		"The Go Programming Language",

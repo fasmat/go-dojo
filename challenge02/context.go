@@ -5,25 +5,22 @@ type Context interface {
 
 type emptyCtx struct{}
 
-func (e *emptyCtx) String() string {
-	switch e {
-	case background:
-		return "context.Background"
-	case todo:
-		return "context.TODO"
-	}
-	return "unknown empty Context"
+type backgroundCtx struct{ emptyCtx }
+
+func (backgroundCtx) String() string {
+	return "context.Background"
 }
 
-var (
-	background = new(emptyCtx)
-	todo       = new(emptyCtx)
-)
+type todoCtx struct{ emptyCtx }
 
-func TODO() Context {
-	return nil
+func (todoCtx) String() string {
+	return "context.TODO"
 }
 
 func Background() Context {
-	return nil
+	return backgroundCtx{}
+}
+
+func TODO() Context {
+	return todoCtx{}
 }
